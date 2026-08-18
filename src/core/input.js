@@ -6,7 +6,7 @@ export class Input {
     addEventListener('keydown',e=>{if(e.code==='ArrowLeft')this.left=true;if(e.code==='ArrowRight')this.right=true;if(e.code==='Space'){e.preventDefault();this.onFire()};if(e.code==='KeyM')this.onMute()});
     addEventListener('keyup',e=>{if(e.code==='ArrowLeft')this.left=false;if(e.code==='ArrowRight')this.right=false});addEventListener('blur',()=>this.clear());
   }
-  down(e){const p=this.vp.screenToVirtual(e.clientX,e.clientY);let action='';if(inside(p,C.FIRE)){action='fire';this.onFire();this.onClick()}else if(p.x>1780&&p.y<150){action='mute';this.onMute();this.onClick()}else{action='aim';this.onAim(p)}if(action){this.ids.set(e.pointerId,action);this.canvas.setPointerCapture?.(e.pointerId);e.preventDefault()}}
+  down(e){const p=this.vp.screenToVirtual(e.clientX,e.clientY),v=this.vp.visible,muteRadius=Math.max(70,52/this.vp.scale);let action='';if(inside(p,C.FIRE)){action='fire';this.onFire();this.onClick()}else if(Math.hypot(p.x-(v.right-muteRadius),p.y-(v.top+muteRadius))<=muteRadius){action='mute';this.onMute();this.onClick()}else{action='aim';this.onAim(p)}if(action){this.ids.set(e.pointerId,action);this.canvas.setPointerCapture?.(e.pointerId);e.preventDefault()}}
   move(e){if(this.ids.get(e.pointerId)==='aim')this.onAim(this.vp.screenToVirtual(e.clientX,e.clientY))}
   up(e){this.ids.delete(e.pointerId)}
   clear(){this.left=this.right=false;this.ids.clear()}

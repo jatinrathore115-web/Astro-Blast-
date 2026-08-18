@@ -14,6 +14,15 @@ Then open `http://localhost:8000`. The space scene uses edge-to-edge cover scali
 
 Audio unlocks on the first tap. The game includes a layered, synthesized Blast effect and the CC0 **Space Flight** music loop by wipics, loaded through Web Audio with a smooth fade-in.
 
+## Responsive behavior
+
+- The background uses an independent aspect-preserving cover pass with no letterboxing or stretching.
+- Gameplay uses visible virtual safe-area bounds, bottom-aligning the cannon on short landscape screens while keeping it centered in portrait.
+- HUD, tutorial text, HandNudge, meteor entry edges, mute hit target, and entity cleanup adapt to the current viewport.
+- Device pixel ratio is capped at 2 for low-end GPU performance, while compact-screen text retains a minimum physical size.
+- Touch scrolling, browser zoom gestures, selection, overscroll, and callouts are disabled on the play surface.
+- Resize, orientation change, mobile visual-viewport changes, and iOS safe-area insets are handled automatically.
+
 ## Asset pipeline
 
 The supplied transparent 1920×1080 layers are kept as overlays in `assets/images`. `tools/gif_to_spritesheet.py` converts the source GIF with Pillow and writes the horizontal sheet and JSON metadata. The checked-in sheet was generated from all 36 supplied frames.
