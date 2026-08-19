@@ -42,14 +42,14 @@ export class Fireball {
     if(!this.alive||!img)return;
     const q=Math.min(1,this.age/C.FIREBALL_FADE_IN),ease=q*q*(3-2*q);
     const alpha=ease*ease,scale=C.FIREBALL_ENTRY_SCALE+(1-C.FIREBALL_ENTRY_SCALE)*ease;
-    const hue=this.color==='purple'?245:this.color==='pink'?305:this.color==='green'?90:this.color==='neon-green'?72:0;
-    const glowColor=this.color==='purple'?'rgba(172,65,255,':this.color==='pink'?'rgba(255,66,175,':this.color==='green'?'rgba(70,255,110,':this.color==='neon-green'?'rgba(135,255,0,':'rgba(255,115,0,';
+    const hue=this.color==='purple'?245:this.color==='pink'?305:this.color==='green'?90:this.color==='neon-green'?72:this.color==='yellow'?30:0;
+    const glowColor=this.color==='purple'?'rgba(172,65,255,':this.color==='pink'?'rgba(255,66,175,':this.color==='green'?'rgba(70,255,110,':this.color==='neon-green'?'rgba(135,255,0,':this.color==='yellow'?'rgba(255,235,45,':'rgba(255,115,0,';
     x.save();x.globalAlpha=alpha;x.translate(this.x,this.y);
     x.rotate(Math.atan2(this.vy,this.vx)-C.ART_FORWARD_DEG*Math.PI/180);x.scale(scale,scale);
     x.filter=`blur(${(1-ease)*2}px)`;x.globalCompositeOperation='lighter';
     const glow=x.createRadialGradient(0,0,5,0,0,95);glow.addColorStop(0,`${glowColor}${.34*ease})`);glow.addColorStop(1,'transparent');
     x.fillStyle=glow;x.fillRect(-95,-95,190,190);x.globalCompositeOperation='source-over';
-    x.filter=`blur(${(1-ease)*2}px) hue-rotate(${hue}deg) saturate(${this.color==='neon-green'?2.1:hue?1.45:1}) brightness(${this.color==='neon-green'?1.3:1})`;
+    x.filter=`blur(${(1-ease)*2}px) hue-rotate(${hue}deg) saturate(${this.color==='neon-green'?2.1:this.color==='yellow'?1.75:hue?1.45:1}) brightness(${this.color==='neon-green'?1.3:this.color==='yellow'?1.18:1})`;
     const fw=480,fh=864,height=C.FIREBALL_DRAW_H,width=height*fw/fh,i=this.frame|0;
     x.drawImage(img,i*fw,0,fw,fh,-width/2,-height/2,width,height);x.restore();
   }
